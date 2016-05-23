@@ -17,6 +17,7 @@ knitr::opts_knit$set(root.dir = '../..')
 
 ```{r libraries, include=FALSE}
 library(ggplot2)
+library(dplyr)
 ```
 
 # Some analysis
@@ -43,5 +44,7 @@ summary(lm(medv ~ age, housing_df))
 # A plot
 ```{r}
 ggplot(housing_df, aes(x = age, y = medv)) + geom_point() + geom_smooth(method=lm)
+
+housing_df %>% select(age, medv) %>% write.table("figures/price_age.tab", row.names = F, sep = '\t')
 ggsave("figures/price_age.png")
 ```
