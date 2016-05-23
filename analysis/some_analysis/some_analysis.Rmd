@@ -1,6 +1,7 @@
 ---
-title: "Some analysis"
+title: "Example Analysis"
 author: "Tobias Madsen"
+date: "22 May 2016"
 output: html_document
 ---
 
@@ -14,12 +15,33 @@ knitr::opts_chunk$set(fig.path = ".figures/")
 knitr::opts_knit$set(root.dir = '../..')
 ```
 
+```{r libraries, include=FALSE}
+library(ggplot2)
+```
+
 # Some analysis
-This is a document to create a report over your analysis. Knitr documents can be compiled command line using `R CMD Sweave some_analysis.Rmd`. Place this command in your workflow and make it depend on files generated in upstream analysis. This way the knitr document is recompiled when needed.
+This document illustrates how to create a report for an analysis. Knitr documents can be compiled command line using `R CMD Sweave some_analysis.Rmd`. Place this command in your workflow and make it depend on files generated in upstream analysis. This way the knitr document is recompiled when needed.
 
 In knitr you can use cache to save the results of analysis, see [Knitr Cache]([ABC](http://yihui.name/knitr/demo/cache/)). The files generated a placed under .cache and .cache/figures. Both this directories are ignored by git(".cache" is in .gitignore)
 
-```{r someChunk, cache=TRUE}
-x <- rnorm(10)
-plot(x)
+# Read data
+
+```{r readData}
+housing_df <- read.table("data/housing.data", quote="\"", comment.char="")
+
+# Add column names
+names(housing_df) <- c("crime_rate", "residential", "industry", "charles", 
+                       "nox", "rooms", "age", "dis", "highways", "tax", "ptratio", "blacks", "lstat", "medv")
+```
+
+# Simple regression model
+
+```{r regressionModel}
+summary(lm(medv ~ age, housing_df))
+```
+
+# A plot
+```{r}
+ggplot(housing_df, aes(x = age, y = medv)) + geom_point() + geom_smooth(method=lm)
+ggsave("figures/price_age.png")
 ```
