@@ -13,7 +13,7 @@ target("Download_Data",
 target("Example_Analysis",
        input="data/housing.data",
        output=["analysis/some_analysis/some_analysis.html",
-               "figures/price_age.png",
+               "figures/price_age.pdf",
                "figures/price_age.tab"]) << '''
 (cd analysis/some_analysis/ && Rscript -e 'library(knitr); rmarkdown::render("some_analysis.Rmd")' )
 '''

@@ -27,7 +27,7 @@ In knitr you can use cache to save the results of analysis, see [Knitr Cache]([A
 
 # Read data
 
-```{r readData}
+```{r readData, cache=TRUE}
 housing_df <- read.table("data/housing.data", quote="\"", comment.char="")
 
 # Add column names
@@ -36,6 +36,12 @@ names(housing_df) <- c("crime_rate", "residential", "industry", "charles",
 ```
 
 # Simple regression model
+
+Simple regression model
+
+$$
+X_i \sim \mathcal{N}\left(\alpha + t_i\beta, \sigma^2\right)
+$$
 
 ```{r regressionModel}
 summary(lm(medv ~ age, housing_df))
@@ -46,5 +52,5 @@ summary(lm(medv ~ age, housing_df))
 ggplot(housing_df, aes(x = age, y = medv)) + geom_point() + geom_smooth(method=lm)
 
 housing_df %>% select(age, medv) %>% write.table("figures/price_age.tab", row.names = F, sep = '\t')
-ggsave("figures/price_age.png")
+ggsave("figures/price_age.pdf")
 ```
