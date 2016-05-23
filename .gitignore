@@ -4,6 +4,7 @@
 # create an output subfolder for smaller analysis
 data
 output
+figures
 
 # GWF
 gwf_log
@@ -33,4 +34,7 @@ gwf_log
 *.blg
 *.out
 *.eps
+
+# Rstudio project files
 .Rproj.user
+*.Rproj
